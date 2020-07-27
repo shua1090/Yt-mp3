@@ -4,14 +4,13 @@
     infractions one may create.
 '''
 
-
 from tkinter import filedialog, Label, Button, Tk, StringVar, Place, mainloop, Entry, Radiobutton
 from pytube import YouTube, Playlist
 import pytube, os, glob, re
 from moviepy.editor import VideoFileClip
 
 ##Convert input path and youtube link to video/audio
-def convert(x, path, format):
+def convert(x, path='', format='mp3'):
     ##Try downloading, if fail, assumed as a playlist
     try:
         yt = YouTube(x).streams.first()
@@ -44,7 +43,7 @@ def sendtoconvert():
     convert(videopath.get(), folder_path.get(), v.get())
 
 ##GUI Initialize##
-if __name__ == "__main__":
+def __GUIinitialize__():
     root, v, folder_path = Tk(), StringVar(), StringVar()
     root.title('Youtube to mp3 converter'), root.geometry("300x300")
     button2 = Button(text="Download Folder", command=browse_button).place(relx=0.35, rely=0.3)
@@ -54,3 +53,7 @@ if __name__ == "__main__":
     for text, value, relx, rely in [['Video (mp4)', 'mp4', 0.4, 0.45], ['Audio (mp3)', 'mp3', 0.4, 0.55]]:
         Radiobutton(root, text=text, variable = v, value=value,indicatoron=0).place(relx=relx, rely=rely)
     mainloop()
+    
+#Distinguish between using the convert function or running stand-alone    
+if __name__ == "__main__":
+    __GUIinitialize__()
